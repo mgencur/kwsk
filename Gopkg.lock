@@ -38,6 +38,12 @@
   version = "v0.3.3"
 
 [[projects]]
+  name = "github.com/fsnotify/fsnotify"
+  packages = ["."]
+  revision = "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
+  version = "v1.4.7"
+
+[[projects]]
   name = "github.com/ghodss/yaml"
   packages = ["."]
   revision = "0ca9ea5df5451ffdf184b4428c902747c2c11cd7"
@@ -201,6 +207,12 @@
   version = "v1.4.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/josephburnett/k8sflag"
+  packages = ["pkg/k8sflag"]
+  revision = "eaf31dc5c82d361eba9d4a94739d6d67ddbb59c9"
+
+[[projects]]
   name = "github.com/json-iterator/go"
   packages = ["."]
   revision = "ca39e5af3ece67bbcda3d0f4f56a8e24d9f2dad4"
@@ -248,8 +260,9 @@
     "pkg/apis/serving/v1alpha1",
     "pkg/client/clientset/versioned",
     "pkg/client/clientset/versioned/scheme",
-    "pkg/client/clientset/versioned/typed/istio/v1alpha3",
-    "pkg/client/clientset/versioned/typed/serving/v1alpha1"
+    "pkg/logging",
+    "pkg/logging/logkey",
+    "test"
   ]
   revision = "ac7027ef1dc799a108f18f9194ebe34c48ecadc8"
 
@@ -292,6 +305,47 @@
   packages = ["."]
   revision = "4654dfbb6ad53cb5e27f37d99b02e16c1872fbbb"
   version = "v1.2.15"
+
+[[projects]]
+  name = "go.opencensus.io"
+  packages = [
+    ".",
+    "internal",
+    "internal/tagencoding",
+    "stats",
+    "stats/internal",
+    "stats/view",
+    "tag",
+    "trace",
+    "trace/internal"
+  ]
+  revision = "7b558058b7cc960667590e5413ef55157b06652e"
+  version = "v0.15.0"
+
+[[projects]]
+  name = "go.uber.org/atomic"
+  packages = ["."]
+  revision = "1ea20fb1cbb1cc08cbd0d913a96dead89aa18289"
+  version = "v1.3.2"
+
+[[projects]]
+  name = "go.uber.org/multierr"
+  packages = ["."]
+  revision = "3c4937480c32f4c13a875a1829af76c98ca3d40a"
+  version = "v1.1.0"
+
+[[projects]]
+  name = "go.uber.org/zap"
+  packages = [
+    ".",
+    "buffer",
+    "internal/bufferpool",
+    "internal/color",
+    "internal/exit",
+    "zapcore"
+  ]
+  revision = "ff33455a0e382e8a81d14dd7c922020b6b5e7982"
+  version = "v1.9.1"
 
 [[projects]]
   branch = "master"
@@ -485,7 +539,36 @@
   name = "k8s.io/client-go"
   packages = [
     "discovery",
+    "kubernetes",
     "kubernetes/scheme",
+    "kubernetes/typed/admissionregistration/v1alpha1",
+    "kubernetes/typed/admissionregistration/v1beta1",
+    "kubernetes/typed/apps/v1",
+    "kubernetes/typed/apps/v1beta1",
+    "kubernetes/typed/apps/v1beta2",
+    "kubernetes/typed/authentication/v1",
+    "kubernetes/typed/authentication/v1beta1",
+    "kubernetes/typed/authorization/v1",
+    "kubernetes/typed/authorization/v1beta1",
+    "kubernetes/typed/autoscaling/v1",
+    "kubernetes/typed/autoscaling/v2beta1",
+    "kubernetes/typed/batch/v1",
+    "kubernetes/typed/batch/v1beta1",
+    "kubernetes/typed/batch/v2alpha1",
+    "kubernetes/typed/certificates/v1beta1",
+    "kubernetes/typed/core/v1",
+    "kubernetes/typed/events/v1beta1",
+    "kubernetes/typed/extensions/v1beta1",
+    "kubernetes/typed/networking/v1",
+    "kubernetes/typed/policy/v1beta1",
+    "kubernetes/typed/rbac/v1",
+    "kubernetes/typed/rbac/v1alpha1",
+    "kubernetes/typed/rbac/v1beta1",
+    "kubernetes/typed/scheduling/v1alpha1",
+    "kubernetes/typed/settings/v1alpha1",
+    "kubernetes/typed/storage/v1",
+    "kubernetes/typed/storage/v1alpha1",
+    "kubernetes/typed/storage/v1beta1",
     "pkg/apis/clientauthentication",
     "pkg/apis/clientauthentication/v1alpha1",
     "pkg/version",
@@ -502,6 +585,7 @@
     "tools/clientcmd/api/v1",
     "tools/metrics",
     "tools/pager",
+    "tools/reference",
     "transport",
     "util/buffer",
     "util/cert",
