@@ -19,20 +19,25 @@ package util
 
 import (
 	"math/rand"
+	"os"
 	"sync"
 	"time"
 
+	flowsv1alpha1 "github.com/knative/eventing/pkg/apis/flows/v1alpha1"
 	"github.com/knative/serving/pkg/apis/serving/v1alpha1"
+	"github.com/kr/pretty"
 	"go.uber.org/zap"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/yaml"
 )
 
-// ResourceNames holds names of related Config, Route and Revision objects.
+// ResourceNames holds names of related Config, Route, Revision, Flow objects.
 type ResourceNames struct {
 	Config   string
 	Route    string
 	Revision string
+	Flow     string
 }
 
 // Route returns a Route object in namespace using the route and configuration
@@ -73,6 +78,23 @@ func Configuration(namespace string, names ResourceNames, imagePath string) *v1a
 			},
 		},
 	}
+}
+
+// FlowFromFile return a Flow object that is created by reading a yaml file
+func FlowFromFile(yamlFile string) *flowsv1alpha1.Flow {
+	file, err := os.Open(yamlFile)
+	if err != nil {
+		panic(err.Error())
+	}
+	dec := yaml.NewYAMLToJSONDecoder(file)
+
+	var flow flowsv1alpha1.Flow
+	if err := dec.Decode(&flow); err != nil {
+		panic(err.Error())
+	}
+
+	pretty.Println(flow)
+	return &flow
 }
 
 const (

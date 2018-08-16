@@ -18,6 +18,8 @@ limitations under the License.
 package util
 
 import (
+	eventingversioned "github.com/knative/eventing/pkg/client/clientset/versioned"
+	eventingtyped "github.com/knative/eventing/pkg/client/clientset/versioned/typed/flows/v1alpha1"
 	"github.com/knative/serving/pkg/client/clientset/versioned"
 	servingtyped "github.com/knative/serving/pkg/client/clientset/versioned/typed/serving/v1alpha1"
 	"k8s.io/client-go/kubernetes"
@@ -25,12 +27,13 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 )
 
-// Clients holds instances of interfaces for making requests to Knative Serving.
+// Clients holds instances of interfaces for making requests to Knative Serving and Eventing.
 type Clients struct {
 	Kube      *kubernetes.Clientset
 	Routes    servingtyped.RouteInterface
 	Configs   servingtyped.ConfigurationInterface
 	Revisions servingtyped.RevisionInterface
+	Flows     eventingtyped.FlowInterface
 }
 
 // NewClients instantiates and returns several clientsets required for making request to the
@@ -52,16 +55,22 @@ func NewClients(configPath string, clusterName string, namespace string) (*Clien
 		return nil, err
 	}
 
+	csEventing, err := eventingversioned.NewForConfig(cfg)
+	if err != nil {
+		return nil, err
+	}
+
 	clients.Routes = cs.ServingV1alpha1().Routes(namespace)
 	clients.Configs = cs.ServingV1alpha1().Configurations(namespace)
 	clients.Revisions = cs.ServingV1alpha1().Revisions(namespace)
+	clients.Flows = csEventing.FlowsV1alpha1().Flows(namespace)
 
 	return clients, nil
 }
 
 // Delete will delete all Routes and Configs with the names routes and configs, if clients
 // has been successfully initialized.
-func (clients *Clients) Delete(routes []string, configs []string) error {
+func (clients *Clients) Delete(routes []string, configs []string, flows []string) error {
 	if clients.Routes != nil {
 		for _, route := range routes {
 			err := clients.Routes.Delete(route, nil)
@@ -74,6 +83,15 @@ func (clients *Clients) Delete(routes []string, configs []string) error {
 	if clients.Configs != nil {
 		for _, config := range configs {
 			err := clients.Configs.Delete(config, nil)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	if clients.Flows != nil {
+		for _, flow := range flows {
+			err := clients.Flows.Delete(flow, nil)
 			if err != nil {
 				return err
 			}
