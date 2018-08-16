@@ -81,3 +81,8 @@ required = [
 [[constraint]]
   branch = "master"
   name = "github.com/knative/serving"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/knative/eventing"
+  

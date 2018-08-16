@@ -252,6 +252,24 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/knative/eventing"
+  packages = [
+    "pkg/apis/channels",
+    "pkg/apis/channels/v1alpha1",
+    "pkg/apis/feeds",
+    "pkg/apis/feeds/v1alpha1",
+    "pkg/apis/flows",
+    "pkg/apis/flows/v1alpha1",
+    "pkg/client/clientset/versioned",
+    "pkg/client/clientset/versioned/scheme",
+    "pkg/client/clientset/versioned/typed/channels/v1alpha1",
+    "pkg/client/clientset/versioned/typed/feeds/v1alpha1",
+    "pkg/client/clientset/versioned/typed/flows/v1alpha1"
+  ]
+  revision = "904f40365958491641f1326da4bbaf52a329c457"
+
+[[projects]]
+  branch = "master"
   name = "github.com/knative/serving"
   packages = [
     "pkg/apis/istio",
@@ -261,10 +279,21 @@
     "pkg/client/clientset/versioned",
     "pkg/client/clientset/versioned/scheme",
     "pkg/logging",
-    "pkg/logging/logkey",
-    "test"
+    "pkg/logging/logkey"
   ]
   revision = "ac7027ef1dc799a108f18f9194ebe34c48ecadc8"
+
+[[projects]]
+  name = "github.com/kr/pretty"
+  packages = ["."]
+  revision = "73f6ac0b30a98e433b289500d779f50c1a6f0712"
+  version = "v0.1.0"
+
+[[projects]]
+  name = "github.com/kr/text"
+  packages = ["."]
+  revision = "e2ffdb16a802fe2bb95e2e35ff34f0e53aeef34f"
+  version = "v0.1.0"
 
 [[projects]]
   branch = "master"
