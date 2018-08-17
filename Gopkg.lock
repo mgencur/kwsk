@@ -260,24 +260,6 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/knative/eventing"
-  packages = [
-    "pkg/apis/channels",
-    "pkg/apis/channels/v1alpha1",
-    "pkg/apis/feeds",
-    "pkg/apis/feeds/v1alpha1",
-    "pkg/apis/flows",
-    "pkg/apis/flows/v1alpha1",
-    "pkg/client/clientset/versioned",
-    "pkg/client/clientset/versioned/scheme",
-    "pkg/client/clientset/versioned/typed/channels/v1alpha1",
-    "pkg/client/clientset/versioned/typed/feeds/v1alpha1",
-    "pkg/client/clientset/versioned/typed/flows/v1alpha1"
-  ]
-  revision = "904f40365958491641f1326da4bbaf52a329c457"
-
-[[projects]]
-  branch = "master"
   name = "github.com/knative/pkg"
   packages = ["apis"]
   revision = "16665d81635242eb0268d92c0f9ccb4e6cd20d18"
