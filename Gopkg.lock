@@ -35,16 +35,16 @@
   version = "v9"
 
 [[projects]]
-  name = "github.com/davecgh/go-spew"
-  packages = ["spew"]
-  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
-  version = "v1.1.0"
-
-[[projects]]
   branch = "master"
   name = "github.com/cloudfoundry/jibber_jabber"
   packages = ["."]
   revision = "bcc4c8345a21301bf47c032ff42dd1aae2fe3027"
+
+[[projects]]
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/docker/go-units"
@@ -57,12 +57,6 @@
   packages = ["."]
   revision = "5b77d2a35fb0ede96d138fc9a99f5c9b6aef11b4"
   version = "v1.7.0"
-
-[[projects]]
-  name = "github.com/fsnotify/fsnotify"
-  packages = ["."]
-  revision = "c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9"
-  version = "v1.4.7"
 
 [[projects]]
   name = "github.com/ghodss/yaml"
@@ -239,12 +233,6 @@
   version = "v1.4.0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/josephburnett/k8sflag"
-  packages = ["pkg/k8sflag"]
-  revision = "eaf31dc5c82d361eba9d4a94739d6d67ddbb59c9"
-
-[[projects]]
   name = "github.com/json-iterator/go"
   packages = ["."]
   revision = "ca39e5af3ece67bbcda3d0f4f56a8e24d9f2dad4"
@@ -257,12 +245,6 @@
     "pkg/apis/build/v1alpha1"
   ]
   revision = "5c1d8c8469d1ed34b2aecf4c2305b3a57fff2ee3"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/knative/pkg"
-  packages = ["apis"]
-  revision = "16665d81635242eb0268d92c0f9ccb4e6cd20d18"
 
 [[projects]]
   branch = "master"
@@ -284,6 +266,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/knative/pkg"
+  packages = ["apis"]
+  revision = "16665d81635242eb0268d92c0f9ccb4e6cd20d18"
+
+[[projects]]
+  branch = "master"
   name = "github.com/knative/serving"
   packages = [
     "pkg/apis/istio",
@@ -292,6 +280,8 @@
     "pkg/apis/serving/v1alpha1",
     "pkg/client/clientset/versioned",
     "pkg/client/clientset/versioned/scheme",
+    "pkg/client/clientset/versioned/typed/istio/v1alpha3",
+    "pkg/client/clientset/versioned/typed/serving/v1alpha1",
     "pkg/logging",
     "pkg/logging/logkey"
   ]
@@ -673,6 +663,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "54ab4aef69d9183233bed6d0e85701448393f0efca7a21fb0fdfeb0e7741cbac"
+  inputs-digest = "4bdd93e68907869215340690082be2f0bf95f7374daac516b8868e88ac7a6b15"
   solver-name = "gps-cdcl"
   solver-version = 1
