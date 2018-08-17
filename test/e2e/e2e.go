@@ -1,8 +1,10 @@
 package e2e
 
 import (
+	"net/http"
 	"testing"
 
+	"github.com/apache/incubator-openwhisk-client-go/whisk"
 	"github.com/projectodd/kwsk/test/e2e/util"
 	"go.uber.org/zap"
 
@@ -94,4 +96,18 @@ func CreateEventSource(clients *util.Clients, logger *zap.SugaredLogger, names *
 	}
 	names.EventSource = eSource.ObjectMeta.Name
 	return err
+}
+
+// NewClient creates new OpenWhisk client based on configuration from whick.properties that is found under OPENWHISK_HOME
+// env variable
+func NewWhiskClient() (*whisk.Client, error) {
+	config, err := whisk.GetWhiskPropertiesConfig()
+	if err != nil {
+		return nil, err
+	}
+	client, err := whisk.NewClient(http.DefaultClient, config)
+	if err != nil {
+		return nil, err
+	}
+	return client, nil
 }

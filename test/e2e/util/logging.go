@@ -64,7 +64,7 @@ func (e *ZapMetricExporter) ExportSpan(vd *trace.SpanData) {
 	e.logger.Infof("metric %s %d %d %s", vd.Name, vd.StartTime.UnixNano(), vd.EndTime.UnixNano(), duration)
 }
 
-func newLogger(logLevel string) *zap.SugaredLogger {
+func newLogger(logLevel string) (*zap.SugaredLogger, zap.AtomicLevel) {
 	configJSONTemplate := `{
 	  "level": "%s",
 	  "encoding": "console",
@@ -107,5 +107,5 @@ func initializeLogger(logVerbose bool) {
 
 		logLevel = "debug"
 	}
-	Logger = newLogger(logLevel)
+	Logger, _ = newLogger(logLevel)
 }
