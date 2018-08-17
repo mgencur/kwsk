@@ -23,6 +23,8 @@ import (
 	"sync"
 	"time"
 
+	channelsv1alpha1 "github.com/knative/eventing/pkg/apis/channels/v1alpha1"
+	feedsv1alpha1 "github.com/knative/eventing/pkg/apis/feeds/v1alpha1"
 	flowsv1alpha1 "github.com/knative/eventing/pkg/apis/flows/v1alpha1"
 	"github.com/knative/serving/pkg/apis/serving/v1alpha1"
 	"github.com/kr/pretty"
@@ -34,10 +36,13 @@ import (
 
 // ResourceNames holds names of related Config, Route, Revision, Flow objects.
 type ResourceNames struct {
-	Config   string
-	Route    string
-	Revision string
-	Flow     string
+	Config      string
+	Route       string
+	Revision    string
+	Flow        string
+	ClusterBus  string
+	EventType   string
+	EventSource string
 }
 
 // Route returns a Route object in namespace using the route and configuration
@@ -81,20 +86,47 @@ func Configuration(namespace string, names ResourceNames, imagePath string) *v1a
 }
 
 // FlowFromFile return a Flow object that is created by reading a yaml file
-func FlowFromFile(yamlFile string) *flowsv1alpha1.Flow {
+func FlowFromFile(yamlFile string) (flow *flowsv1alpha1.Flow) {
+	flow = &flowsv1alpha1.Flow{}
+	FromFile(yamlFile, flow)
+	return
+}
+
+// ClusterBusFromFile return a Flow object that is created by reading a yaml file
+func ClusterBusFromFile(yamlFile string) (bus *channelsv1alpha1.ClusterBus) {
+	bus = &channelsv1alpha1.ClusterBus{}
+	FromFile(yamlFile, bus)
+	return
+}
+
+// EventTypeFromFile return a EventType object that is created by reading a yaml file
+func EventTypeFromFile(yamlFile string) (eType *feedsv1alpha1.EventType) {
+	eType = &feedsv1alpha1.EventType{}
+	FromFile(yamlFile, eType)
+	return
+}
+
+// EventSourceFromFile return a EventSource object that is created by reading a yaml file
+func EventSourceFromFile(yamlFile string) (eSource *feedsv1alpha1.EventSource) {
+	eSource = &feedsv1alpha1.EventSource{}
+	FromFile(yamlFile, eSource)
+	return
+}
+
+// FromFile pupulates a struct by reading a yaml file
+func FromFile(yamlFile string, into interface{}) {
 	file, err := os.Open(yamlFile)
 	if err != nil {
 		panic(err.Error())
 	}
+	defer file.Close()
 	dec := yaml.NewYAMLToJSONDecoder(file)
 
-	var flow flowsv1alpha1.Flow
-	if err := dec.Decode(&flow); err != nil {
+	if err := dec.Decode(into); err != nil {
 		panic(err.Error())
 	}
 
-	pretty.Println(flow)
-	return &flow
+	pretty.Println(into)
 }
 
 const (

@@ -1,0 +1,12 @@
+apiVersion: channels.knative.dev/v1alpha1
+kind: ClusterBus
+metadata:
+  name: stub
+spec:
+  dispatcher:
+    args:
+    - -logtostderr
+    - -stderrthreshold
+    - INFO
+    image: gcr.io/knative-releases/github.com/knative/eventing/pkg/buses/stub@sha256:830589a39637982185f94ff4982626b55e3d4eed9e1d8f72263716e53012c02b
+    name: dispatcher

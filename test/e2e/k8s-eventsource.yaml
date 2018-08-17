@@ -1,0 +1,11 @@
+apiVersion: feeds.knative.dev/v1alpha1
+kind: EventSource
+metadata:
+  name: k8sevents
+  namespace: default
+spec:
+  image: gcr.io/knative-releases/github.com/knative/eventing/pkg/sources/k8sevents@sha256:dede03bfe3261682f2fec0a23a22a1aab3b805eb0fbee8d1465f09b803fbc864
+  parameters:
+    image: gcr.io/knative-releases/github.com/knative/eventing/pkg/sources/k8sevents/receive_adapter@sha256:b4059fdbb54c10f278deabf47467f513d301ff2c1e7ca88408f09e816ce944a1
+  source: k8sevents
+  type: k8sevents

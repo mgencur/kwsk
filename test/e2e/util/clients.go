@@ -19,7 +19,9 @@ package util
 
 import (
 	eventingversioned "github.com/knative/eventing/pkg/client/clientset/versioned"
-	eventingtyped "github.com/knative/eventing/pkg/client/clientset/versioned/typed/flows/v1alpha1"
+	channelstyped "github.com/knative/eventing/pkg/client/clientset/versioned/typed/channels/v1alpha1"
+	feedstyped "github.com/knative/eventing/pkg/client/clientset/versioned/typed/feeds/v1alpha1"
+	flowstyped "github.com/knative/eventing/pkg/client/clientset/versioned/typed/flows/v1alpha1"
 	"github.com/knative/serving/pkg/client/clientset/versioned"
 	servingtyped "github.com/knative/serving/pkg/client/clientset/versioned/typed/serving/v1alpha1"
 	"k8s.io/client-go/kubernetes"
@@ -29,11 +31,14 @@ import (
 
 // Clients holds instances of interfaces for making requests to Knative Serving and Eventing.
 type Clients struct {
-	Kube      *kubernetes.Clientset
-	Routes    servingtyped.RouteInterface
-	Configs   servingtyped.ConfigurationInterface
-	Revisions servingtyped.RevisionInterface
-	Flows     eventingtyped.FlowInterface
+	Kube         *kubernetes.Clientset
+	Routes       servingtyped.RouteInterface
+	Configs      servingtyped.ConfigurationInterface
+	Revisions    servingtyped.RevisionInterface
+	Flows        flowstyped.FlowInterface
+	ClusterBuses channelstyped.ClusterBusInterface
+	EventSources feedstyped.EventSourceInterface
+	EventTypes   feedstyped.EventTypeInterface
 }
 
 // NewClients instantiates and returns several clientsets required for making request to the
@@ -63,14 +68,19 @@ func NewClients(configPath string, clusterName string, namespace string) (*Clien
 	clients.Routes = cs.ServingV1alpha1().Routes(namespace)
 	clients.Configs = cs.ServingV1alpha1().Configurations(namespace)
 	clients.Revisions = cs.ServingV1alpha1().Revisions(namespace)
+
+	//TODO: Separate serving and eventing client sets?
 	clients.Flows = csEventing.FlowsV1alpha1().Flows(namespace)
+	clients.ClusterBuses = csEventing.ChannelsV1alpha1().ClusterBuses()
+	clients.EventSources = csEventing.FeedsV1alpha1().EventSources(namespace)
+	clients.EventTypes = csEventing.FeedsV1alpha1().EventTypes(namespace)
 
 	return clients, nil
 }
 
 // Delete will delete all Routes and Configs with the names routes and configs, if clients
 // has been successfully initialized.
-func (clients *Clients) Delete(routes []string, configs []string, flows []string) error {
+func (clients *Clients) Delete(routes []string, configs []string, flows []string, clusterBuses []string, eventSources []string, eventTypes []string) error {
 	if clients.Routes != nil {
 		for _, route := range routes {
 			err := clients.Routes.Delete(route, nil)
@@ -92,6 +102,33 @@ func (clients *Clients) Delete(routes []string, configs []string, flows []string
 	if clients.Flows != nil {
 		for _, flow := range flows {
 			err := clients.Flows.Delete(flow, nil)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	if clients.ClusterBuses != nil {
+		for _, clusterBus := range clusterBuses {
+			err := clients.ClusterBuses.Delete(clusterBus, nil)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	if clients.EventSources != nil {
+		for _, eventSource := range eventSources {
+			err := clients.EventSources.Delete(eventSource, nil)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	if clients.EventTypes != nil {
+		for _, eventType := range eventTypes {
+			err := clients.EventTypes.Delete(eventType, nil)
 			if err != nil {
 				return err
 			}

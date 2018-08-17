@@ -36,7 +36,7 @@ func Setup(t *testing.T) *util.Clients {
 // TearDown will delete created names using clients.
 func TearDown(clients *util.Clients, names util.ResourceNames) {
 	if clients != nil {
-		clients.Delete([]string{names.Route}, []string{names.Config}, []string{names.Flow})
+		clients.Delete([]string{names.Route}, []string{names.Config}, []string{names.Flow}, []string{names.ClusterBus}, []string{names.EventType}, []string{names.EventSource})
 	}
 }
 
@@ -63,5 +63,35 @@ func CreateFlow(clients *util.Clients, logger *zap.SugaredLogger, names *util.Re
 		return err
 	}
 	names.Flow = flow.ObjectMeta.Name
+	return err
+}
+
+// CreateClusterBus will create a ClusterBus object using clients. This clusterBus is read from a file named yamlFile.
+func CreateClusterBus(clients *util.Clients, logger *zap.SugaredLogger, names *util.ResourceNames, yamlFile string) error {
+	bus, err := clients.ClusterBuses.Create(util.ClusterBusFromFile(yamlFile))
+	if err != nil {
+		return err
+	}
+	names.ClusterBus = bus.ObjectMeta.Name
+	return err
+}
+
+// CreateEventType will create an EventType object using clients. This eventType is read from a file named yamlFile.
+func CreateEventType(clients *util.Clients, logger *zap.SugaredLogger, names *util.ResourceNames, yamlFile string) error {
+	eType, err := clients.EventTypes.Create(util.EventTypeFromFile(yamlFile))
+	if err != nil {
+		return err
+	}
+	names.EventType = eType.ObjectMeta.Name
+	return err
+}
+
+// CreateEventSource will create an EventSource object using clients. This eventSource is read from a file named yamlFile.
+func CreateEventSource(clients *util.Clients, logger *zap.SugaredLogger, names *util.ResourceNames, yamlFile string) error {
+	eSource, err := clients.EventSources.Create(util.EventSourceFromFile(yamlFile))
+	if err != nil {
+		return err
+	}
+	names.EventSource = eSource.ObjectMeta.Name
 	return err
 }

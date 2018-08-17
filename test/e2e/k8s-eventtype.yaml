@@ -1,0 +1,8 @@
+apiVersion: feeds.knative.dev/v1alpha1
+kind: EventType
+metadata:
+  name: dev.knative.k8s.event
+  namespace: default
+spec:
+  description: subscription for receiving k8s cluster events
+  eventSource: k8sevents

@@ -33,11 +33,35 @@ func TestEvents(t *testing.T) {
 
 	names := &util.ResourceNames{}
 
-	err := CreateFlow(clients, logger, names, "flow.yaml")
-	if err != nil {
-		t.Fatalf("Failed to create Flow: %v", err)
-	}
-	logger.Infof("Created Flow named %s", names.Flow)
-
+	//err := CreateFlow(clients, logger, names, "flow.yaml")
+	// if err != nil {
+	// 	t.Fatalf("Failed to create Flow: %v", err)
+	// }
+	// logger.Infof("Created Flow named %s", names.Flow)
 	//TODO: Wait for Flow to be ready (similar to waiting for Route/Config in crd_checks.go)
+
+	// logger.Infof("Creating a new ClusterBus")
+
+	// err := CreateClusterBus(clients, logger, names, "clusterbus-stub.yaml")
+	// if err != nil {
+	// 	t.Fatalf("Failed to create ClusterBus: %v", err)
+	// }
+	// logger.Infof("Created ClusterBus named %s", names.ClusterBus)
+
+	// logger.Infof("Creating a new EventType")
+
+	// err := CreateEventType(clients, logger, names, "k8s-eventtype.yaml")
+	// if err != nil {
+	// 	t.Fatalf("Failed to create EventType: %v", err)
+	// }
+	// logger.Infof("Created EventType named %s", names.EventType)
+
+	logger.Infof("Creating a new EventSource")
+
+	err := CreateEventSource(clients, logger, names, "k8s-eventsource.yaml")
+	if err != nil {
+		t.Fatalf("Failed to create EventSource: %v", err)
+	}
+	logger.Infof("Created EventSource named %s", names.EventSource)
+
 }
