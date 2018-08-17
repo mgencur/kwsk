@@ -85,4 +85,7 @@ required = [
 [[constraint]]
   branch = "master"
   name = "github.com/knative/eventing"
-  
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/apache/incubator-openwhisk-client-go"

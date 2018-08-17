@@ -48,3 +48,6 @@ popd
 
 pkill -P "$KWSK_PID"
 exit $STATUS
+
+export OPENWHISK_HOME=$OWSK_HOME
+go test -v -tags=e2e -count=1 ../test/e2e -run ^TestEvents$
